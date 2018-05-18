@@ -53,8 +53,10 @@
             var max_fields = 20; //maximum input boxes allowed
             var wrapper = $("#fields_wrapper"); //Fields wrapper           
             var x = 1; //initlal text box count
+            out.print("Entra funcion")
             if(x < max_fields){ //max input box allowed
             x++; //text box increment
+            out.print("Entra if");
             $(wrapper).append('
                 <td>Nombre campo<input id="field_name" type="text" name="nombre_tabla  " value="" /></td>
             '); //add input box
@@ -62,6 +64,7 @@
         }
         
     </script>
+    
         <h2>Tus tablas</h2>
         <%-- Mostrar tablas --%>
         <h2>Crea una nueva tabla</h2>
@@ -82,7 +85,7 @@
                 </tbody>
             </table>
             
-            <input type="submit" value="Añadir campo" onclick="add_field"/>
+            <input type="submit" value="Añadir campo" onclick="add_field()"/>
 
             <input type="submit" value="Crear tabla" onclick="callRESTfulWebService(
              'result',

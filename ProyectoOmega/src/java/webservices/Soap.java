@@ -9,6 +9,13 @@ import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.ejb.Stateless;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -24,5 +31,27 @@ public class Soap {
     @WebMethod(operationName = "hello")
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "crearTabla")
+    public Boolean crearTabla(@WebParam(name = "nombre") String nombre) {
+        boolean res = false;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Omega;create=true;",
+                    "root", "root");
+            Statement query = con.createStatement();
+            String QueryString = "create table " + nombre + "(id int not null, primary key(id))";
+            //TODO write your implementation code here:
+            res=true;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Soap.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Soap.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
     }
 }

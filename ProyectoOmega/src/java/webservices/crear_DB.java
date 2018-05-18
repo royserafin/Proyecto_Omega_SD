@@ -49,21 +49,25 @@ public class crear_DB {
      * @param content representation for the resource
      */
     @POST
-    @Consumes(MediaType.TEXT_HTML)
-    @Produces(MediaType.TEXT_HTML)
+    @Produces("text/html")
     public String putHtml(@QueryParam("table_name")String name) {
+        Boolean res = crearTabla(name);
+        if(res)
         return "Se ha creado la nueva tabla con el nombre de: "+ name;
+        else return "No se pudo crear la tabla";
     }
-    
-    
-    
-   
-    
+        
     @DELETE
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
     public String deleteHtml(@QueryParam("table_name")String name) {
         return "Se ha borrado la nueva tabla con el nombre de: "+ name;
+    }
+
+    private static Boolean crearTabla(java.lang.String nombre) {
+        clientes.Soap_Service service = new clientes.Soap_Service();
+        clientes.Soap port = service.getSoapPort();
+        return port.crearTabla(nombre);
     }
     
    
